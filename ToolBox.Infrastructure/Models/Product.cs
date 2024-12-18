@@ -25,6 +25,9 @@ namespace ToolBox.Infrastructure.Models
         [StringLength(MaxDescriptionLength)]
         public string? ProductDescription { get; set; }
 
+        [Comment("Product size")]
+        public string? Size { get; set; }
+
         [Required]
         [Comment("Product image")]
         public byte[]? Image { get; set; } 
