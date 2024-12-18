@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ToolBox.Data;
+using ToolBox.Infrastructure.Data;
 
 namespace ToolBox
 {
