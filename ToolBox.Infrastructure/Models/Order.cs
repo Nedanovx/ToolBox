@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToolBox.Infrastructure.Models
@@ -10,6 +11,10 @@ namespace ToolBox.Infrastructure.Models
 
         [Required]
         public DateTime CreatedAt { get; set; }
+
+        [Required]
+        [Comment("Order is sent to user or not")]
+        public bool IsSent { get; set; } = false;
 
         [Required]
         public int DeliveryAddressId { get; set; }
