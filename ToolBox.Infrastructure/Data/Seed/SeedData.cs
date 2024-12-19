@@ -120,6 +120,8 @@ namespace ToolBox.Infrastructure.Data.Seed
                 FirstName = "Ivan",
                 LastName = "Ivanov",
             };
+            User1.PasswordHash = hasher.HashPassword(User1, "Zaek5#");
+
             User2 = new ApplicationUser()
             {
                 Id = "0dd13f6c-918d-4e39-bf80-5874a9c96b08",
