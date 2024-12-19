@@ -9,7 +9,7 @@ namespace ToolBox
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+ 
             builder.Services.AddApplicationDbContext(builder.Configuration);
             builder.Services.AddApplicationIdentity(builder.Configuration);
 
