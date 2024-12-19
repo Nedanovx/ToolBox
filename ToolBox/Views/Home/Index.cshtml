@@ -1,8 +1,96 @@
-﻿@{
+﻿@model IEnumerable<ProductQueryModel>
+@{
+
+	var products = Model.ToList();
+	int itemsPerPage = 8;
+	int totalPages = (int)Math.Ceiling((double)products.Count / itemsPerPage);
+	var currentPage = Convert.ToInt32(ViewContext.HttpContext.Request.Query["page"]);
+
+	if (currentPage == 0)
+	{
+		currentPage = 1;
+	}
+
+	int startIndex = (currentPage - 1) * itemsPerPage;
+	int endIndex = Math.Min(startIndex + itemsPerPage, products.Count);
+}
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="row mb-2">
+	<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="https://cdn11.bigcommerce.com/s-79p24h122p/product_images/uploaded_images/laser-category-banner-2.jpg" class="d-block" style="height: 18rem; width: 78rem" alt="Laser Tool">
+			</div>
+			<div class="carousel-item">
+				<img src="https://cdn.toptul.com/comm/upimage/w-230216-09657.png" class="d-block" style="height: 18rem; width: 78rem" alt="Toptul">
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="row mb-2">
+	@if (products.Any())
+	{
+		<div class="row">
+			@for (int i = startIndex; i < endIndex; i += 4) 
+			{
+				<div class="row mb-4">
+					
+					@for (int j = i; j < i + 4 && j < endIndex; j++) 
+					{
+						var product = products[j];
+						<div class="col-md-3">							
+							<div class="card h-100" style="width: 100%;">
+								<img src="data:image/jpeg;base64,@product.ImageBase64" class="card-img-top" alt="@product.ProductName" style="object-fit:cover; height: 12rem;">
+								<div class="card-body">
+									<h5 class="card-title">@product.ProductName</h5>
+									<span>@product.ProductPrice лв.</span>
+								</div>
+								<div class="d-flex justify-content-around">
+									<a class="btn btn-primary mb-4 mx-1" asp-controller="Details" asp-action="Details" asp-route-id="@product.SKU">Преглед</a>
+									@if (product.IsInStock)
+									{
+										<a class="btn btn-primary mb-4 mx-1" asp-controller="Buy" asp-action="Buy" asp-route-id="@product.Id">Купи</a>
+									}
+									else
+									{
+										<span class="text-danger mb-4">Изчерпан</span>
+									}
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			}
+		</div>
+	}
+</section>
+
+
+<section class="row mt-4">
+	<nav>
+		<ul class="pagination justify-content-center">
+			<li class="page-item @((totalPages == 0 || totalPages == 1) ? "disabled" : "")">
+				<a class="page-link" href="?page=1"><<</a>
+			</li>
+			<li class="page-item @(currentPage == 1 ? "disabled" : "")">
+				<a class="page-link" href="?page=@(currentPage - 1)"><</a>
+			</li>
+			@for (int i = 1; i <= totalPages; i++)
+			{
+				<li class="page-item @(currentPage == i ? "active" : "")">
+					<a class="page-link" href="?page=@i">@i</a>
+				</li>
+			}
+			<li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+				<a class="page-link" href="?page=@(currentPage + 1)">></a>
+			</li>
+			<li class="page-item @(totalPages == 0 || totalPages == 1 ? "disabled" : "")">
+				<a class="page-link" href="?page=@totalPages">>></a>
+			</li>
+		</ul>
+	</nav>
+</section>
