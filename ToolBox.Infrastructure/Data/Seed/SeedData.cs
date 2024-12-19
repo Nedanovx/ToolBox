@@ -487,7 +487,7 @@ namespace ToolBox.Infrastructure.Data.Seed
             Product15 = new Product()
             {
                 Id = 15,
-                ProductName = "Звездогаечен ключ",
+                ProductName = "Звездогаечен ключ, 21 mm",
                 SKU = "AAEB2121",
                 ProductDescription = null,
                 Size = "21 mm",
@@ -505,7 +505,7 @@ namespace ToolBox.Infrastructure.Data.Seed
             Product16 = new Product()
             {
                 Id = 16,
-                ProductName = "Звездогаечен ключ",
+                ProductName = "Удължен вездогаечен ключ, 10 mm",
                 SKU = "AAEL1010",
                 ProductDescription = null,
                 Size = "10 mm",
