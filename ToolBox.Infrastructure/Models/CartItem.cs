@@ -10,6 +10,7 @@ namespace ToolBox.Infrastructure.Models
     {
         [Key]
         public int Id { get; set; }
+        
         [Required]
         public int CartId { get; set; }
 
