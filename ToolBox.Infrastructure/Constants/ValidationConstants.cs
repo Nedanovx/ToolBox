@@ -55,5 +55,15 @@
         /// Postal code length
         /// </summary>
         public const int PostalCodeLength = 4;
+
+        /// <summary>
+        /// Max product size length
+        /// </summary>
+        public const int MaxSizeLength = 10;
+
+        /// <summary>
+        /// Max product characteristic
+        /// </summary>
+        public const int MaxCharacteristicLength = 50;
     }
 }

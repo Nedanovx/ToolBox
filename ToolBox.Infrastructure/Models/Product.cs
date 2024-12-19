@@ -26,9 +26,13 @@ namespace ToolBox.Infrastructure.Models
         public string? ProductDescription { get; set; }
 
         [Comment("Product size")]
+        [StringLength(MaxSizeLength)]
         public string? Size { get; set; }
 
-        [Required]
+        [Comment("Product characteristic")]
+        [StringLength(MaxCharacteristicLength)]
+        public string? Characteristic { get; set; }
+
         [Comment("Product image")]
         public byte[]? Image { get; set; } 
 
@@ -65,6 +69,5 @@ namespace ToolBox.Infrastructure.Models
         public ICollection<ProductSubCategory> ProductSubCategories { get; set; } = new HashSet<ProductSubCategory>();
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
-
     }
 }
