@@ -47,7 +47,17 @@
 								<img src="data:image/jpeg;base64,@product.ImageBase64" class="card-img-top" alt="@product.ProductName" style="object-fit:cover; height: 12rem;">
 								<div class="card-body">
 									<h5 class="card-title">@product.ProductName</h5>
-									<span>@product.ProductPrice лв.</span>
+									@if(product.IsPromo == true)
+									{
+										<div class="d-flex justify-content-around">
+										<span style="text-decoration:line-through">@product.ProductPrice лв.</span>
+										<span style="color:red">@product.PromoPrice лв.</span>
+										</div>
+									}
+									else
+									{
+										<span>@product.ProductPrice лв.</span>
+									}
 								</div>
 								<div class="d-flex justify-content-around">
 									<a class="btn btn-primary mb-4 mx-1" asp-controller="Details" asp-action="Details" asp-route-id="@product.SKU">Преглед</a>
