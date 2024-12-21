@@ -13,8 +13,8 @@
     <header>
         <div class="d-flex p-3 justify-content-between">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToolHub</a>
-            <form class="d-flex" style="width:50%">
-                <input class="form-control me-2" type="search" placeholder="Търсене..." aria-label="Search">
+            <form class="d-flex" style="width:50%" asp-controller="Search" asp-action="Search" method="get">
+                <input class="form-control me-2" type="search" name="text" placeholder="Търсене..." aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Търси</button>
             </form>
             <div class="d-flex mx-5 position-relative">
