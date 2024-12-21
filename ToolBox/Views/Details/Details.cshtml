@@ -1,23 +1,24 @@
-﻿﻿﻿
-@model DetailsQueryModel
+﻿@model DetailsQueryModel
 
 @{
     ViewData["Title"] = $"Detail {@Model.ProductName}";
 }
-<section class=" row row-cols-2 h-50">
-    <div class="col card h-100" style="width: 20rem;">
-        <img src="data:image/jpeg;base64,@Model.ImageBase64" class="card-img-top" style="height:300px; width:300px" alt="@Model.ProductName" />
+<section class="dflex row row-cols-md-2">
+    <div class="col card">
+        <img src="data:image/jpeg;base64,@Model.ImageBase64" class="card-img-top img-fluid w-50% h-auto" alt="@Model.ProductName" />
     </div>
-    <div class="col" style="position: relative;">
+    <div class="col flex-fill justify-content-center">
         <div class="row mx-2 md-4">
             <h3>@Model.ProductName</h3>
         </div>
-        <div class="row mx-2 md-6 justify-content-md-start">
+        <div class="row mx-2 md-6">
             @if (Model.ProductDescription != null)
             {
                 @foreach (var sentence in Model.ProductDescription.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    <div>@sentence</div>
+                    <div>
+                        <span>- @sentence</span>
+                    </div>
 
                 }
             }
@@ -29,22 +30,56 @@
         </div>
         @if (Model.IsInStock)
         {
-            <div class="row mx-2 mt-6 justify-content-md-start" style="position: absolute; bottom: 0; left: 0;">
-                <big class="fw-bolder" style="font-size:x-large">@Model.ProductPrice лв.</big>
-                <div class="justify-content-between">
-                    <form  method="post" style="display: inline-block;">
-                        <label for="quantity" style="margin-right: 10px;">Количество:</label>
-                        <input type="number" id="quantity" name="quantity" min="1" value="1" style="width: 50px; border: none; border-bottom: 1px solid #ccc; padding: 5px;">
-                        <input type="submit" value="Купи" style="padding: 5px 10px;">
+            <div class="d-flex flex-column mx-2 md-6 mt-2">
+            @if (Model.IsPromo)
+            {
+                <p> 
+                    <span class ="fw-bold">
+                        Цена: <span class="fw-bold text-decoration-line-through">@Model.ProductPrice лв.</span>
+                    </span>
+                </p>
+                <p>
+                    <span class ="fw-bold text-danger">
+                        Промоционална цена: <span class="fw-bold text-danger">@Model.PromoPrice лв.</span>
+                    </span>
+                </p>
+                    <form method="post" class="d-flex align-items-center">
+                        <label for="quantity" class="me-2">Количество:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control me-2" style="width: 80px;">
+                        <button type="submit" class="btn btn-primary">Купи</button>
                     </form>
-                </div>
-            </div>
+            }
+            else
+            {
+                    <p>
+                        <span class="fw-bold">
+                            Цена: <span class="fw-bold">@Model.ProductPrice лв.</span>
+                        </span>
+                    </p>
+                    <form method="post" class="d-flex align-items-center">
+                        <label for="quantity" class="me-2">Количество:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control me-2" style="width: 80px;">
+                        <button type="submit" class="btn btn-primary">Купи</button>
+                    </form>
+            }
+        </div>
         }
         else
         {
-            <div class="row mx-2 mt-6 justify-content-md-start" style="position: absolute; bottom: 0; left: 0;">
-                <span class="text-danger mb-4">Изчерпан</span>
-            </div>
+        <div class="mb-4">
+                @if (Model.IsPromo)
+                {
+                <p>
+                    <span class="fw-bold text-decoration-line-through">@Model.ProductPrice лв.</span>
+                    <span class="fw-bold text-danger">@Model.PromoPrice лв.</span>
+                </p>
+                }
+                else
+                {
+                <p class="fw-bold">@Model.ProductPrice лв.</p>
+                }
+        </div>
+        <p class="text-danger fw-bold">Изчерпан</p>
         }
     </div>
 </section>
@@ -55,7 +90,7 @@
         <div class="comments">
             @foreach (var comment in Model.AllComments)
             {
-                <div class="d-flex justify-content-center align-items-center">
+                <div class="d-flex justify-content-center">
                     <div class="comment mb-3" style="background-color: white; border: 1px solid #ddd; width: 40rem; padding: 1rem;">
                         <div class="d-flex justify-content-between mb-2 border-bottom">
                             <span style="font-weight: bold;">@comment.FirstName @comment.LastName</span>
@@ -87,9 +122,7 @@
     <div class="d-flex justify-content-md-center">
         <a class="btn btn-primary mb-4 mx-4 sta" asp-controller="Comment" asp-action="Add" asp-route-productId="@Model.Id">Добави коментар</a>
     </div>
-
-</section>
-
+    </select>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

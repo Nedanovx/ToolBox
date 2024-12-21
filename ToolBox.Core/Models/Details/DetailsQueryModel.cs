@@ -19,6 +19,8 @@ namespace ToolBox.Core.Models.Details
 
 		public bool IsInStock { get; set; }
 
+		public bool IsPromo {  get; set; }
+
 		public decimal PromoPrice {  get; set; }
 
 		public IEnumerable<CommentQueryModel> AllComments { get; set; } = new HashSet<CommentQueryModel>();
