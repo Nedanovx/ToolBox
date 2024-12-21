@@ -4,6 +4,7 @@ using ToolBox.Core.Contracts;
 using ToolBox.Core.Services;
 using ToolBox.Infrastructure.Common;
 using ToolBox.Infrastructure.Data;
+using ToolBox.Infrastructure.Models;
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtension
@@ -12,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<ICategoryService, CategoryService>();
 			services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IDetailService, DetailService>();
 			return services;
         }
 
@@ -32,6 +34,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             return services;
         }
     }

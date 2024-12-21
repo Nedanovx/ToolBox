@@ -40,5 +40,11 @@ namespace ToolBox.Core.Services
                 .OrderByDescending(p => p.Id)
                 .ToListAsync();
         }
-    }
+
+		public async Task<bool> ProductExistBySKUAsync(string sku)
+		{
+			return await repository.AllAsync<Product>()
+				.AnyAsync(p => p.SKU == sku);
+		}
+	}
 }
