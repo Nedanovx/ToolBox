@@ -5,5 +5,7 @@ namespace ToolBox.Core.Contracts
     {
         Task<IEnumerable<ProductQueryModel>> AllProductAsync();
 		Task<bool> ProductExistBySKUAsync(string sku);
-	}
+        Task<ProductQueryModel> GetProductById(int id);
+
+    }
 }

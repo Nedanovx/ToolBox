@@ -120,7 +120,7 @@
         <p class="mt-3 text-center text-muted">Все още няма коментари за този продукт.</p>
     }
     <div class="d-flex justify-content-md-center">
-        <a class="btn btn-primary mb-4 mx-4 sta" asp-controller="Comment" asp-action="Add" asp-route-productId="@Model.Id">Добави коментар</a>
+        <a class="btn btn-primary mb-4 mx-4 sta" asp-controller="Comment" asp-action="Add" asp-route-sku="@Model.SKU">Добави коментар</a>
     </div>
 </section>
 @section Scripts {

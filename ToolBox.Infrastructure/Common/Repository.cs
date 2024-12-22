@@ -20,5 +20,14 @@ namespace ToolBox.Infrastructure.Common
         {
             return DbSet<T>();
         }
+        public async Task AddAsync<T>(T entity) where T : class
+        {
+            await DbSet<T>().AddAsync(entity);
+        }
+
+        public async Task<int> SavaChangesAsync()
+        {
+            return await context.SaveChangesAsync();
+        }
     }
 }
