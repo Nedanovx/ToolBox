@@ -1,21 +1,22 @@
 ﻿@model IEnumerable<ProductQueryModel>
 @{
 
-    var products = Model.ToList();
-    int itemsPerPage = 8;
-    int totalPages = (int)Math.Ceiling((double)products.Count / itemsPerPage);
-    var currentPage = Convert.ToInt32(ViewContext.HttpContext.Request.Query["page"]);
+	var products = Model.ToList();
+	int itemsPerPage = 8;
+	int totalPages = (int)Math.Ceiling((double)products.Count / itemsPerPage);
+	var currentPage = Convert.ToInt32(ViewContext.HttpContext.Request.Query["page"]);
 
-    if (currentPage == 0)
-    {
-        currentPage = 1;
-    }
+	if (currentPage == 0)
+	{
+		currentPage = 1;
+	}
 
-    int startIndex = (currentPage - 1) * itemsPerPage;
-    int endIndex = Math.Min(startIndex + itemsPerPage, products.Count);
+	int startIndex = (currentPage - 1) * itemsPerPage;
+	int endIndex = Math.Min(startIndex + itemsPerPage, products.Count);
 }
+
 @{
-    ViewData["Title"] = "Result";
+    ViewData["Title"] = ViewData["Title"];
 }
 
 <section class="row mb-2">
@@ -74,27 +75,19 @@
     }
 </section>
 
-<section class="row mt-4">
-    <nav>
-        <ul class="pagination justify-content-center">
-            <li class="page-item @((totalPages == 0 || totalPages == 1) ? "disabled" : "")">
-                <a class="page-link" href="?page=1"><<</a>
-            </li>
-            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
-                <a class="page-link" href="?page=@(currentPage - 1)"><</a>
-            </li>
-            @for (int i = 1; i <= totalPages; i++)
-            {
-                <li class="page-item @(currentPage == i ? "active" : "")">
-                    <a class="page-link" href="?page=@i">@i</a>
-                </li>
-            }
-            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
-                <a class="page-link" href="?page=@(currentPage + 1)">></a>
-            </li>
-            <li class="page-item @(totalPages == 0 || totalPages == 1 ? "disabled" : "")">
-                <a class="page-link" href="?page=@totalPages">>></a>
-            </li>
-        </ul>
-    </nav>
-</section>
+<nav>
+	<ul class="pagination justify-content-center">
+		<li class="page-item @(currentPage == 1 ? "disabled" : "")">
+			<a class="page-link" href="?category=@ViewContext.HttpContext.Request.Query["category"]&page=@(currentPage - 1)"><</a>
+		</li>
+		@for (int i = 1; i <= totalPages; i++)
+		{
+			<li class="page-item @(currentPage == i ? "active" : "")">
+				<a class="page-link" href="?category=@ViewContext.HttpContext.Request.Query["category"]&page=@i">@i</a>
+			</li>
+		}
+		<li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+			<a class="page-link" href="?category=@ViewContext.HttpContext.Request.Query["category"]&page=@(currentPage + 1)">></a>
+		</li>
+	</ul>
+</nav>

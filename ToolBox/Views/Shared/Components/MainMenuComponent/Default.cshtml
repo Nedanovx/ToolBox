@@ -4,12 +4,12 @@
     @foreach (var category in Model)
     {
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark" asp-controller="Product" asp-action="Category" asp-route-category="@category.CategoryName" role="button" aria-expanded="false">@category.CategoryName</a>
+            <a class="nav-link dropdown-toggle text-dark" asp-controller="Category" asp-action="Category" asp-route-category="@category.CategoryName" role="button" aria-expanded="false">@category.CategoryName</a>
             <ul class="dropdown-menu" style="background-color:#FFA500">
                 @foreach (var subCategory in category.SubCategories)
                 {
                     <li>
-                        <a class="dropdown-item text-dark" asp-controller="Product" asp-action="SubCategory" asp-route-subcategory="@subCategory.SubCategoryName">@subCategory.SubCategoryName</a>
+                        <a class="dropdown-item text-dark" asp-controller="Category" asp-action="SubCategory" asp-route-subcategory="@subCategory.SubCategoryName">@subCategory.SubCategoryName</a>
                     </li>
                 }
             </ul>

@@ -3,6 +3,7 @@ using ToolBox.Infrastructure.Common;
 using ToolBox.Infrastructure.Models;
 using ToolBox.Core.Models.Category;
 using Microsoft.EntityFrameworkCore;
+using ToolBox.Core.Models.Product;
 
 namespace ToolBox.Core.Services
 {
@@ -26,6 +27,64 @@ namespace ToolBox.Core.Services
                     { 
                         SubCategoryName = sc.SubCategoryName 
                     }).ToList(),
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProductQueryModel>> GetAllProductByCategory(string category)
+        {
+            return await repository.AllAsync<Product>()
+                .Where(p => p.IsVisible == true)
+                .Include(p => p.ProductSubCategories)
+                .ThenInclude(psc => psc.SubCategory)
+                .Where(p => p.ProductSubCategories.Any(psc =>
+
+                psc.SubCategory.Category.CategoryName == category))
+                .Select(p => new ProductQueryModel
+                {
+                    Id = p.Id,
+                    ProductName = p.ProductName,
+                    SKU = p.SKU,
+                    ProductDescription = p.ProductDescription,
+                    Size = p.Size,
+                    Characteristic = p.Characteristic,
+                    ImageBase64 = p.Image != null
+                    ? Convert.ToBase64String(p.Image)
+                    : string.Empty,
+                    ProductPrice = p.ProductPrice,
+                    Quantity = p.Quantity,
+                    Weight = p.Weight,
+                    IsInStock = p.IsInStock,
+                    IsPromo = p.IsPromo,
+                    PromoPrice = p.PromoPrice,
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProductQueryModel>> GetAllProductBySubCategory(string subCategory)
+        {
+            return await repository.AllAsync<Product>()
+                .Where(p => p.IsVisible == true)
+                .Include(p => p.ProductSubCategories)
+                .ThenInclude(psc => psc.SubCategory)
+                .Where(p => p.ProductSubCategories.Any(psc => psc.SubCategory.SubCategoryName == subCategory))
+                .Select(p => new ProductQueryModel
+                {
+                    Id = p.Id,
+                    ProductName = p.ProductName,
+                    SKU = p.SKU,
+                    ProductDescription = p.ProductDescription,
+                    Size = p.Size,
+                    Characteristic = p.Characteristic,
+                    ImageBase64 = p.Image != null
+                    ? Convert.ToBase64String(p.Image)
+                    : string.Empty,
+                    ProductPrice = p.ProductPrice,
+                    Quantity = p.Quantity,
+                    Weight = p.Weight,
+                    IsInStock = p.IsInStock,
+                    IsPromo = p.IsPromo,
+                    PromoPrice = p.PromoPrice,
                 })
                 .ToListAsync();
         }
