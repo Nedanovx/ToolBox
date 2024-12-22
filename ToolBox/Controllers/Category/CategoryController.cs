@@ -22,7 +22,7 @@ namespace ToolBox.Controllers.Category
         {
             ViewData["Title"] = category;
 
-            var model = await categoryService.GetAllProductByCategory(category);
+            var model = await categoryService.GetAllProductByCategoryAsync(category);
             if (model == null)
             {
                 return BadRequest();
@@ -36,7 +36,7 @@ namespace ToolBox.Controllers.Category
         {
             ViewData["Title"] = subCategory;
 
-            var model = await categoryService.GetAllProductBySubCategory(subCategory);
+            var model = await categoryService.GetAllProductBySubCategoryAsync(subCategory);
             if (model == null)
             {
                 return BadRequest();

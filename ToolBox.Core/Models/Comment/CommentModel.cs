@@ -4,8 +4,11 @@ using static ToolBox.Core.Constants.Constants;
 
 namespace ToolBox.Core.Models.Comment
 {
-    public class AddCommentModel
+    public class CommentModel
     {
+        [Required]
+        public int Id { get; set; }
+
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(MaxCommentLength, MinimumLength = MinCommentLength,
             ErrorMessage = CommentLengthErrorMessage)]

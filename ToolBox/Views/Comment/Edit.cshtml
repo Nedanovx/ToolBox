@@ -1,0 +1,20 @@
+﻿@model CommentModel
+@{
+    ViewData["Title"] = "Edit Comment";
+}
+
+
+<form asp-controller="Comment" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" name="UserId" value="@Model.UserId" />
+    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+    <input type="hidden" name="DateTime" value="@Model.DateTime.ToString("dd /MM/yyyy")" />
+    <textarea class="form-control" asp-for="ProductComment" rows="5"></textarea>
+    <span asp-validation-for="ProductComment" class="text-danger"></span>
+    <button type="submit" class="btn btn-primary mt-3">Запази промените</button>
+    <a asp-controller="Details" asp-action="RedirectToSku" asp-route-id="@Model.ProductId" class="btn btn-secondary mt-3">Отказ</a>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

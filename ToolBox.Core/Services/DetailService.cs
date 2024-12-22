@@ -15,7 +15,7 @@ namespace ToolBox.Core.Services
         {
             this.repository = repository;
         }
-        public async Task<DetailsQueryModel> DetailsBySKU(string sku)
+        public async Task<DetailsQueryModel> DetailsBySKUAsync(string sku)
         {
             return await repository.AllAsync<Product>()
                             .Where(p => p.SKU == sku)

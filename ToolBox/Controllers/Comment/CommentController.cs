@@ -31,13 +31,13 @@ namespace ToolBox.Controllers.Comment
             {
                 return Unauthorized();
             }
-            var product = await detailService.DetailsBySKU(sku);
+            var product = await detailService.DetailsBySKUAsync(sku);
             if (product == null)
             {
                 return NotFound();
             }
 
-            var model = new AddCommentModel();
+            var model = new CommentModel();
             model.UserId = currentUser.Id;
             model.DateTime = DateTime.Now;
             model.ProductId = product.Id;
@@ -46,20 +46,60 @@ namespace ToolBox.Controllers.Comment
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddCommentModel model)
+        public async Task<IActionResult> Add(CommentModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var product = await productService.GetProductById(model.ProductId);
+            var product = await productService.GetProductByIdAsync(model.ProductId);
             if (product == null)
             {
                 return NotFound();
             }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             await commentService.AddCommentAsync(model);
       
+            return RedirectToAction("Details", "Details", new { sku = product.SKU });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+            var currentUser = await userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            var model = await commentService.GetCommentByIdAsync(id);
+
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(CommentModel model)
+        {
+            var product = await productService.GetProductByIdAsync(model.ProductId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await commentService.EditPostAsync(model);
+
             return RedirectToAction("Details", "Details", new { sku = product.SKU });
         }
     }

@@ -4,6 +4,8 @@ namespace ToolBox.Core.Contracts
 {
     public interface ICommentService
     {
-        Task AddCommentAsync(AddCommentModel model);
+        Task AddCommentAsync(CommentModel model);
+        Task<CommentModel> GetCommentByIdAsync(int id);
+        Task<int> EditPostAsync(CommentModel model);
     }
 }

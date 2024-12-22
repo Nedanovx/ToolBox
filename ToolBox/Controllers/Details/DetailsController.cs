@@ -24,9 +24,21 @@ namespace ToolBox.Controllers.Details
                 return BadRequest();
             }
 
-            var model = await detailService.DetailsBySKU(sku);
+            var model = await detailService.DetailsBySKUAsync(sku);
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RedirectToSku(int id)
+        {
+            var product = await productService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Details", new { sku = product.SKU });
         }
     }
 }

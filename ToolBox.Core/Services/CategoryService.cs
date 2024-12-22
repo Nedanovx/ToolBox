@@ -31,7 +31,7 @@ namespace ToolBox.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductQueryModel>> GetAllProductByCategory(string category)
+        public async Task<IEnumerable<ProductQueryModel>> GetAllProductByCategoryAsync(string category)
         {
             return await repository.AllAsync<Product>()
                 .Where(p => p.IsVisible == true)
@@ -61,7 +61,7 @@ namespace ToolBox.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductQueryModel>> GetAllProductBySubCategory(string subCategory)
+        public async Task<IEnumerable<ProductQueryModel>> GetAllProductBySubCategoryAsync(string subCategory)
         {
             return await repository.AllAsync<Product>()
                 .Where(p => p.IsVisible == true)

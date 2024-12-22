@@ -47,7 +47,7 @@ namespace ToolBox.Core.Services
                 .AnyAsync(p => p.SKU == sku);
         }
 
-        public async Task<ProductQueryModel> GetProductById(int id)
+        public async Task<ProductQueryModel> GetProductByIdAsync(int id)
         {
             return await repository.AllAsync<Product>()
                 .Where(p => p.Id == id)

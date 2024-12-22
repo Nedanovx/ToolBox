@@ -5,7 +5,7 @@ namespace ToolBox.Core.Contracts
     public interface ICategoryService
     {
         Task<IEnumerable<CategoryQueryModel>> AllCategoryAsync();
-        Task<IEnumerable<ProductQueryModel>> GetAllProductByCategory(string category);
-        Task<IEnumerable<ProductQueryModel>> GetAllProductBySubCategory(string subCategory);
+        Task<IEnumerable<ProductQueryModel>> GetAllProductByCategoryAsync(string category);
+        Task<IEnumerable<ProductQueryModel>> GetAllProductBySubCategoryAsync(string subCategory);
     }
 }

@@ -3,6 +3,6 @@ namespace ToolBox.Core.Contracts
 {
 	public interface IDetailService
 	{
-		Task<DetailsQueryModel> DetailsBySKU(string sku);
+		Task<DetailsQueryModel> DetailsBySKUAsync(string sku);
 	}
 }
