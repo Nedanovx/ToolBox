@@ -7,5 +7,7 @@ namespace ToolBox.Core.Contracts
         Task AddCommentAsync(CommentModel model);
         Task<CommentModel> GetCommentByIdAsync(int id);
         Task<int> EditPostAsync(CommentModel model);
+        Task<CommentModel> DeleteCommentAsync(int id);
+        Task<int> DeleteAsync (int id);
     }
 }

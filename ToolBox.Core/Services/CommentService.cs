@@ -49,5 +49,28 @@ namespace ToolBox.Core.Services
             await repository.SavaChangesAsync();
             return comment.Id;
         }
+
+        public async Task<CommentModel> DeleteCommentAsync(int id)
+        {
+            return await repository.AllAsync<Comment>()
+                .Where(c => c.Id == id)
+                .Select(c => new CommentModel()
+                {
+                    Id = c.Id,
+                    UserId = c.UserId,
+                    DateTime = c.Time,
+                    ProductId = c.ProductId,
+                    ProductComment = c.ProductComment
+                }).FirstAsync();
+        }
+        public async Task<int> DeleteAsync(int id)
+        {
+            var comment = await repository.GetByIdAsync<Comment>(id);
+
+            await repository.RemoveAsync<Comment>(comment);
+            await repository.SavaChangesAsync();
+
+            return comment.ProductId;
+        }
     }
 }
