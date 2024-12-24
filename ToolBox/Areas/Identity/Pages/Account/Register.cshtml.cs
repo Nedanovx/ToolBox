@@ -97,7 +97,7 @@ namespace ToolBox.Areas.Identity.Pages.Account
             [Required]
             [StringLength(100, ErrorMessage = "Полето {0} трябва да съдържа от {2} до {1} символа.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
             /// <summary>
