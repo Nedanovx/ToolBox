@@ -9,7 +9,7 @@ namespace ToolBox
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
- 
+
             builder.Services.AddApplicationDbContext(builder.Configuration);
             builder.Services.AddApplicationIdentity(builder.Configuration);
 
@@ -19,14 +19,14 @@ namespace ToolBox
 
             var app = builder.Build();
 
-            
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");              
+                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 
@@ -36,6 +36,13 @@ namespace ToolBox
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.MapControllerRoute
+            (
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+            );
+
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
