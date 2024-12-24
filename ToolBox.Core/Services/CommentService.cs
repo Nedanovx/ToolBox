@@ -24,7 +24,7 @@ namespace ToolBox.Core.Services
                 UserId = model.UserId,
             });
 
-            await repository.SavaChangesAsync();
+            await repository.SaveChangesAsync();
         }
 
         public async Task<CommentModel> GetCommentByIdAsync(int id)
@@ -46,7 +46,7 @@ namespace ToolBox.Core.Services
             var comment = repository.GetByIdAsync<Comment>(model.Id).Result;
 
             comment.ProductComment = model.ProductComment;
-            await repository.SavaChangesAsync();
+            await repository.SaveChangesAsync();
             return comment.Id;
         }
 
@@ -68,7 +68,7 @@ namespace ToolBox.Core.Services
             var comment = await repository.GetByIdAsync<Comment>(id);
 
             await repository.RemoveAsync<Comment>(comment);
-            await repository.SavaChangesAsync();
+            await repository.SaveChangesAsync();
 
             return comment.ProductId;
         }
