@@ -48,11 +48,8 @@
                                 </div>
                                 <div class="d-flex justify-content-around flex-wrap">
                                     <a class="btn btn-primary mb-2 mx-1" asp-controller="Details" asp-action="Details" asp-route-sku="@product.SKU">Преглед</a>
-                                    @if (product.IsInStock)
-                                    {
-                                        <a class="btn btn-primary mb-2 mx-1" asp-controller="Edit" asp-action="EditProduct" asp-route-id="@product.Id">Купи</a>
-                                    }
-                                    else
+                                    <a class="btn btn-primary mb-2 mx-1" asp-controller="Edit" asp-action="EditProduct" asp-route-id="@product.Id">Редактирай</a>
+                                    @if (!product.IsInStock)
                                     {
                                         <big class="text-danger mb-2">Изчерпан</big>
                                     }
