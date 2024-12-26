@@ -2,19 +2,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using ToolBox.Controllers.Base;
-using ToolBox.Models;
 using ToolBox.Core.Contracts;
 
 namespace ToolBox.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IProductService productService;
 
-        public HomeController(ILogger<HomeController> logger, IProductService productService)
+        public HomeController(IProductService productService)
         {
-            _logger = logger;
             this.productService = productService;
         }
 
@@ -38,11 +35,6 @@ namespace ToolBox.Controllers
             {
                 return View("Error400");
             }
-            else if (statusCode == 401)
-            {
-                return View("Error401");
-            }
-
 
             return View("Error");
         }
