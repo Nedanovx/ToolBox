@@ -11,24 +11,43 @@
 </head>
 <body style="background-color:#FFA500">
     <header>
-        <div class="d-flex p-3 justify-content-between">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToolHub</a>
-            <form class="d-flex" style="width:50%" asp-controller="Search" asp-action="Search" method="get">
-                <input class="form-control me-2" type="search" name="text" placeholder="Търсене..." aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Търси</button>
-            </form>
-            <div class="d-flex mx-5 position-relative">
-                <div class="cart-icon">
-                    <a class="btn mb-2 mx-2" asp-controller="Buy" asp-action="ViewAll">
-                        <i class="fa-solid fa-cart-shopping" style="color: black; font-size:x-large"></i>
-                    </a>
+        @if (User?.Identity?.IsAuthenticated ?? false)
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            @if (User.IsInRole("User"))
+            {
+                <div class="d-flex p-3 justify-content-between">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToolHub</a>
+                    <form class="d-flex" style="width:50%" asp-controller="Search" asp-action="Search" method="get">
+                        <input class="form-control me-2" type="search" name="text" placeholder="Търсене..." aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Търси</button>
+                    </form>
+                    <div class="d-flex mx-5 position-relative">
+                        <div class="cart-icon">
+                            <a class="btn mb-2 mx-2" asp-controller="Buy" asp-action="ViewAll">
+                                <i class="fa-solid fa-cart-shopping" style="color: black; font-size:x-large"></i>
+                            </a>
+                        </div>
+                        <span class="position-absolute bottom-0 end-0 translate-middle badge rounded-pill bg-danger">
+                            <span id="cart-count">0</span>
+                        </span>
+                    </div>
                 </div>
-                <span class="position-absolute bottom-0 end-0 translate-middle badge rounded-pill bg-danger">
-                    <span id="cart-count">0</span>
-                </span>
+            }
+        }
+        else
+        {
+            <div class="d-flex flex-wrap align-items-center p-3">
+                <a class="navbar-brand me-auto" asp-area="" asp-controller="Home" asp-action="Index">ToolHub</a>
+                <div class="mx-auto" style="max-width: 600px; width: 100%;">
+                    <form class="d-flex" asp-controller="Search" asp-action="Search" method="get">
+                        <input class="form-control me-2" type="search" name="text" placeholder="Търсене..." aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Търси</button>
+                    </form>
+                </div>
             </div>
-        
-        </div>
+
+        }
         <nav class="navbar navbar-expand-sm navbar-light box-shadow mb-3" style="background-color:#FFA500">
             <div class="container-fluid">
 
