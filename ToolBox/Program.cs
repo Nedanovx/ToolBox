@@ -31,6 +31,7 @@ namespace ToolBox
             }
 
             app.UseHttpsRedirection();
+            app.UseStatusCodePagesWithRedirects("/StatusCodeError/{0}");
             app.UseStaticFiles();
 
             app.UseRouting();
