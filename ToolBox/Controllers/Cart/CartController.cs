@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using ToolBox.Controllers.Base;
 using ToolBox.Core.Contracts;
-using ToolBox.Core.Models.Cart;
-using ToolBox.Core.Services;
+
 using ToolBox.Infrastructure.Models;
 
 namespace ToolBox.Controllers.Cart
