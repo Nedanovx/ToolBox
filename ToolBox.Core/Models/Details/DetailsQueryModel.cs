@@ -22,7 +22,10 @@ namespace ToolBox.Core.Models.Details
 		public bool IsPromo {  get; set; }
 
 		public decimal PromoPrice {  get; set; }
+		
+		public decimal Weight {  get; set; }
 
-		public IEnumerable<CommentQueryModel> AllComments { get; set; } = new HashSet<CommentQueryModel>();
+
+        public IEnumerable<CommentQueryModel> AllComments { get; set; } = new HashSet<CommentQueryModel>();
 	}
 }
