@@ -34,6 +34,7 @@ namespace ToolBox.Core.Services
                                 IsPromo = p.IsPromo,
                                 PromoPrice = p.PromoPrice,
                                 SKU = p.SKU,
+                                Weight = p.Weight,
                                 AllComments = repository.AllAsync<Comment>()
                             .Where(c => c.ProductId == p.Id)
                             .OrderByDescending(c => c.Time)
