@@ -35,17 +35,20 @@
                 {
                     <p>
                         <span class="fw-bold">
-                            Цена: <span class="fw-bold text-decoration-line-through">@Model.ProductPrice лв.</span>
+                            <span class="fw-bold text-decoration-line-through">Цена: @Model.ProductPrice лв.</span>
                         </span>
                     </p>
                     <p>
                         <span class="fw-bold text-danger">
-                            Промоционална цена: <span class="fw-bold text-danger">@Model.PromoPrice лв.</span>
+                            <span class="fw-bold text-danger">Промоционална цена: @Model.PromoPrice лв.</span>
                         </span>
                     </p>
-                    <form method="post" class="d-flex align-items-center">
+                    <form method="post" class="d-flex align-items-center" asp-controller="Cart" asp-action="AddToCartFromDetails">
                         <label for="quantity" class="me-2">Количество:</label>
                         <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control me-2" style="width: 80px;">
+                        <input type="hidden" name="productId" value="@Model.Id" />
+                        <input type="hidden" name="price" value="@Model.PromoPrice" />
+                        <input type="hidden" name="weight" value="@Model.Weight" />
                         <button type="submit" class="btn btn-primary">Купи</button>
                     </form>
                 }
@@ -56,9 +59,12 @@
                             Цена: <span class="fw-bold">@Model.ProductPrice лв.</span>
                         </span>
                     </p>
-                    <form method="post" class="d-flex align-items-center">
+                    <form method="post" class="d-flex align-items-center" asp-controller="Cart" asp-action="AddToCartFromDetails">
                         <label for="quantity" class="me-2">Количество:</label>
                         <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control me-2" style="width: 80px;">
+                        <input type="hidden" name="productId" value="@Model.Id" />
+                        <input type="hidden" name="price" value="@Model.ProductPrice" />
+                        <input type="hidden" name="weight" value="@Model.Weight" />
                         <button type="submit" class="btn btn-primary">Купи</button>
                     </form>
                 }
@@ -70,13 +76,13 @@
                 @if (Model.IsPromo)
                 {
                     <p>
-                        <span class="fw-bold text-decoration-line-through">@Model.ProductPrice лв.</span>
-                        <span class="fw-bold text-danger">@Model.PromoPrice лв.</span>
+                        <span class="fw-bold text-decoration-line-through">Цена: @Model.ProductPrice лв.</span>
+                        <span class="fw-bold text-danger">Промоционална цена: @Model.PromoPrice лв.</span>
                     </p>
                 }
                 else
                 {
-                    <p class="fw-bold">@Model.ProductPrice лв.</p>
+                    <p class="fw-bold">Цена: @Model.ProductPrice лв.</p>
                 }
             </div>
             <p class="text-danger fw-bold">Изчерпан</p>

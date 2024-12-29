@@ -50,7 +50,20 @@
                                     <a class="btn btn-primary mb-2 mx-1" asp-controller="Details" asp-action="Details" asp-route-sku="@product.SKU">Преглед</a>
                                     @if (product.IsInStock)
                                     {
-                                        <a class="btn btn-primary mb-2 mx-1" asp-controller="Buy" asp-action="Buy" asp-route-id="@product.Id">Купи</a>
+                                        <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                            <input type="hidden" name="productId" value="@product.Id" />
+                                            <input type="hidden" name="quantity" value="1" />
+                                            @if(product.IsPromo == true)
+                                            {
+                                                <input type="hidden" name="price" value="@product.PromoPrice" />
+                                            }
+                                            else
+                                            {
+                                                <input type="hidden" name="price" value="@product.ProductPrice" />
+                                            }
+                                            <input type="hidden" name="weight" value="@product.Weight" />
+                                            <button type="submit" class="btn btn-primary">Купи</button>
+                                        </form>
                                     }
                                     else
                                     {
