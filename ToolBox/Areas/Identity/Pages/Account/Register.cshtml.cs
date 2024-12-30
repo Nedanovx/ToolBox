@@ -18,7 +18,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ToolBox.Core.Contracts;
+using ToolBox.Core.Services;
 using ToolBox.Infrastructure.Models;
+using static ToolBox.Infrastructure.Constants.ValidationConstants;
+using static ToolBox.Core.Constants.Constants;
 
 namespace ToolBox.Areas.Identity.Pages.Account
 {
@@ -30,13 +34,14 @@ namespace ToolBox.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICartService cartService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, ICartService cartService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +49,7 @@ namespace ToolBox.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.cartService = cartService;
         }
 
         /// <summary>
@@ -81,12 +87,12 @@ namespace ToolBox.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(60, ErrorMessage = "Полето {0} трябва да съдържа от {2} до {1} символа.", MinimumLength = 3)]
+            [StringLength(MaxApplicationUserFirstNameLength, MinimumLength = MinAppUserFirstNameLength, ErrorMessage = "Полето {0} трябва да съдържа от {2} до {1} символа.")]
             [Display(Name = "Име")]
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(60, ErrorMessage = "Полето {0} трябва да съдържа от {2} до {1} символа.", MinimumLength = 5)]
+            [StringLength(MaxApplicationUserLastNameLength, MinimumLength = MinAppUserLastNameLength, ErrorMessage = "Полето {0} трябва да съдържа от {2} до {1} символа."]
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
@@ -124,16 +130,19 @@ namespace ToolBox.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddToRoleAsync(user, "User");
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    await cartService.CreateCartAsync(userId);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
