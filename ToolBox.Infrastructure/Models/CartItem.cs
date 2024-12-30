@@ -35,10 +35,10 @@ namespace ToolBox.Infrastructure.Models
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Total => Price * Quantity;
+        public decimal Total { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal TotalWeidht => Weight * Quantity;
+        public decimal TotalWeight { get; set; }
     }
 }
