@@ -45,6 +45,11 @@ namespace ToolBox.Core.Services
         {
             var comment = repository.GetByIdAsync<Comment>(model.Id).Result;
 
+            if (comment == null)
+            {
+                throw new InvalidOperationException();
+            }
+
             comment.ProductComment = model.ProductComment;
             await repository.SaveChangesAsync();
             return comment.Id;
@@ -67,6 +72,10 @@ namespace ToolBox.Core.Services
         {
             var comment = await repository.GetByIdAsync<Comment>(id);
 
+            if(comment == null)
+            {
+                throw new InvalidOperationException();
+            }
             await repository.RemoveAsync<Comment>(comment);
             await repository.SaveChangesAsync();
 

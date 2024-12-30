@@ -1,0 +1,75 @@
+﻿@model CartQueryModel
+
+@{
+    ViewData["Title"] = "Вашата количка";
+    decimal totalSum = 0.00M;
+    decimal orderWeight = 0.00M;
+}
+
+<div class="container mt-4">
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="thead-light">
+                <tr>
+                    <th>Продукт</th>
+                    <th class="text-center">Количество</th>
+                    <th>Цена</th>
+                    <th>Обща цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.CartItems.Any())
+                {
+                    @foreach (var item in Model.CartItems)
+                    {
+                        totalSum += item.Total;
+                        orderWeight += item.TotalWeight;
+                        <tr>
+                            <td>@item.Product.SKU - @item.Product.ProductName</td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <form method="post" asp-controller="Cart" asp-action="UpdateQuantity" class="d-inline-flex">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <div class="input-group input-group-sm">
+                                            <input type="number" name="quantity" value="@item.Quantity" min="1"
+                                                   class="form-control text-center" style="max-width: 60px;" />
+                                            <button type="submit" class="btn btn-sm btn-primary ms-2">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <form method="post" asp-controller="Cart" asp-action="RemoveItem" class="d-inline">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                            <td>@item.Price</td>
+                            <td>@item.Total лв.</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">Няма намерени продукти</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (Model.CartItems.Any())
+        {
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <form method="post" asp-controller="Order" asp-action="CompleteOrder">
+                    <button type="submit" class="btn btn-success btn-lg">Завърши поръчката</button>
+                </form>
+                <div class="card p-3 shadow-sm">
+                    <h5 class="mb-0">Сума за плащане: <strong>@totalSum лв.</strong></h5>
+                    <p class="mb-0 text-muted">Общо тегло: @orderWeight кг.</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

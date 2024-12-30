@@ -68,5 +68,54 @@ namespace ToolBox.Controllers.Cart
 
             return Json(new { count = cartCount });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewAll()
+        {
+            var user = await userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var model = await cartService.GetAllProductAsync(user.Id);
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int productId, int quantity)
+        {
+            if (quantity < 1)
+            {
+                return BadRequest();
+            }
+            var user = await userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            await cartService.UpdateCartItemQuantityAsync(user.Id, productId, quantity);
+            return RedirectToAction("ViewAll", "Cart");
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveItem(int productId)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            await cartService.RemoveCartItemAsync(user.Id, productId);
+            return RedirectToAction("ViewAll", "Cart");
+        }
     }
 }
