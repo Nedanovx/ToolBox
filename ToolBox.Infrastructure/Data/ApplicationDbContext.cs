@@ -32,6 +32,7 @@ namespace ToolBox.Infrastructure.Data
             builder.ApplyConfiguration(new ProductConfig());
             builder.ApplyConfiguration(new ProductSubCategoryConfig());
             builder.ApplyConfiguration(new CommentConfig());
+            builder.ApplyConfiguration(new CartConfig());
             
             base.OnModelCreating(builder);
         }
