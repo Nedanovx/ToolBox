@@ -17,7 +17,7 @@ namespace ToolBox.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -157,7 +157,7 @@ namespace ToolBox.Infrastructure.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                    b.HasDiscriminator().HasValue("IdentityUser");
 
                     b.UseTphMappingStrategy();
                 });
@@ -190,12 +190,10 @@ namespace ToolBox.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -249,12 +247,10 @@ namespace ToolBox.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -282,6 +278,18 @@ namespace ToolBox.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Carts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            UserId = "6331660a-cf01-4033-8642-8774887bc271"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            UserId = "0dd13f6c-918d-4e39-bf80-5874a9c96b08"
+                        });
                 });
 
             modelBuilder.Entity("ToolBox.Infrastructure.Models.CartItem", b =>
@@ -303,6 +311,12 @@ namespace ToolBox.Infrastructure.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalWeight")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("decimal(18,2)");
@@ -388,7 +402,7 @@ namespace ToolBox.Infrastructure.Migrations
                             Id = 1,
                             ProductComment = "Много здрава скоба.",
                             ProductId = 13,
-                            Time = new DateTime(2024, 12, 19, 16, 18, 7, 137, DateTimeKind.Local).AddTicks(4963),
+                            Time = new DateTime(2024, 12, 30, 16, 10, 25, 826, DateTimeKind.Local).AddTicks(9352),
                             UserId = "6331660a-cf01-4033-8642-8774887bc271"
                         },
                         new
@@ -396,7 +410,7 @@ namespace ToolBox.Infrastructure.Migrations
                             Id = 2,
                             ProductComment = "Напишете какви размери има в комплекта.",
                             ProductId = 8,
-                            Time = new DateTime(2024, 12, 19, 16, 18, 7, 137, DateTimeKind.Local).AddTicks(5157),
+                            Time = new DateTime(2024, 12, 30, 16, 10, 25, 826, DateTimeKind.Local).AddTicks(9593),
                             UserId = "0dd13f6c-918d-4e39-bf80-5874a9c96b08"
                         });
                 });
@@ -781,7 +795,7 @@ namespace ToolBox.Infrastructure.Migrations
                             IsInStock = true,
                             IsPromo = false,
                             IsVisible = true,
-                            ProductName = "Звездогаечен ключ",
+                            ProductName = "Звездогаечен ключ, 21 mm",
                             ProductPrice = 12.96m,
                             PromoPrice = 0.00m,
                             Quantity = 19,
@@ -796,7 +810,7 @@ namespace ToolBox.Infrastructure.Migrations
                             IsInStock = true,
                             IsPromo = false,
                             IsVisible = true,
-                            ProductName = "Звездогаечен ключ",
+                            ProductName = "Удължен вездогаечен ключ, 10 mm",
                             ProductPrice = 15.96m,
                             PromoPrice = 0.00m,
                             Quantity = 19,
@@ -1027,15 +1041,15 @@ namespace ToolBox.Infrastructure.Migrations
                         {
                             Id = "79b8a2fa-0fd5-4d3a-ab98-4d7093728c14",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8625548a-e54e-4514-bdf2-66c95f76a258",
+                            ConcurrencyStamp = "c6abc08e-c590-42aa-adff-93c3b4e98b99",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEenM0bNHpAXR7+Jf7o57IKx/p7hcwnKNG0SRF5CVO2dbKXYrVFpBsB2jQV5BRe/vw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFTjojuLqeb3TaxxgyIY7zsDCZyKhdvPf/AADvZiie4F6uK8mChoWceBBXdl3f3VSA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f6b6b965-165b-46e4-93ac-24a4c45c1864",
+                            SecurityStamp = "39279564-556b-4468-a7d3-e91908d12814",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com",
                             FirstName = "Admin",
@@ -1045,14 +1059,15 @@ namespace ToolBox.Infrastructure.Migrations
                         {
                             Id = "6331660a-cf01-4033-8642-8774887bc271",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0f8cc6e2-b5e5-479f-ad9e-486a1d25bbba",
+                            ConcurrencyStamp = "f826438f-780d-44c8-b1ed-491c529a643f",
                             Email = "user1@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER1@GMAIL.COM",
                             NormalizedUserName = "USER1@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKEQOILZzap3PUR0Q5aZ66i8NY7Kr2wSkEsPl6VD40jCqF+pGgflEz7TdnWH2o56vA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d6c274f1-0c36-45a1-8ce0-7507a66eb4bf",
+                            SecurityStamp = "5793edf9-9353-463e-a5fa-da49100b30cf",
                             TwoFactorEnabled = false,
                             UserName = "user1@gmail.com",
                             FirstName = "Ivan",
@@ -1062,15 +1077,15 @@ namespace ToolBox.Infrastructure.Migrations
                         {
                             Id = "0dd13f6c-918d-4e39-bf80-5874a9c96b08",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7d859e1a-3e2f-4973-9598-197de84d2b4e",
+                            ConcurrencyStamp = "dbcfdf29-f3cf-48b3-9172-0da2dfb8c303",
                             Email = "user2@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@GMAIL.COM",
                             NormalizedUserName = "USER2@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELVNAXSh8PqrvUD0Wca4xP6YOi9gaAIiqElm+izalkWVN8JRLCMECQSzIBPiaYVU4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGFmMpHSgV6oduuLr4tE8RU/9gjiKZ1DGinMD0+s74w542nJblxquckmPTDmbR37FA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "76946b17-1efa-4e9f-8afe-9b44c8927188",
+                            SecurityStamp = "ac207519-b908-4278-ab76-3786799daa98",
                             TwoFactorEnabled = false,
                             UserName = "user2@gmail.com",
                             FirstName = "Krum",

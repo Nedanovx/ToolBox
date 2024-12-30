@@ -60,6 +60,8 @@ namespace ToolBox.Infrastructure.Data.Seed
         public ProductSubCategory ProductSubCategory18 { get; set; }
         public Comment Comment1 { get; set; }
         public Comment Comment2 { get; set; }
+        public Cart Cart1 { get; set; }
+        public Cart Cart2 { get; set; }
         public SeedData()
         {
             SeedRole();
@@ -70,6 +72,7 @@ namespace ToolBox.Infrastructure.Data.Seed
             SeedProduct();
             SeedProductSubCategory();
             SeedComment();
+            SeedCart();
         }
         private void SeedRole()
         {
@@ -120,6 +123,8 @@ namespace ToolBox.Infrastructure.Data.Seed
                 FirstName = "Ivan",
                 LastName = "Ivanov",
             };
+            User1.PasswordHash = hasher.HashPassword(User1, "Zaek5#");
+
             User2 = new ApplicationUser()
             {
                 Id = "0dd13f6c-918d-4e39-bf80-5874a9c96b08",
@@ -487,7 +492,7 @@ namespace ToolBox.Infrastructure.Data.Seed
             Product15 = new Product()
             {
                 Id = 15,
-                ProductName = "Звездогаечен ключ",
+                ProductName = "Звездогаечен ключ, 21 mm",
                 SKU = "AAEB2121",
                 ProductDescription = null,
                 Size = "21 mm",
@@ -505,7 +510,7 @@ namespace ToolBox.Infrastructure.Data.Seed
             Product16 = new Product()
             {
                 Id = 16,
-                ProductName = "Звездогаечен ключ",
+                ProductName = "Удължен вездогаечен ключ, 10 mm",
                 SKU = "AAEL1010",
                 ProductDescription = null,
                 Size = "10 mm",
@@ -653,6 +658,20 @@ namespace ToolBox.Infrastructure.Data.Seed
                 Time = DateTime.Now,
                 UserId = "0dd13f6c-918d-4e39-bf80-5874a9c96b08",
                 ProductId = 8
+            };
+        }
+
+        private void SeedCart()
+        {
+            Cart1 = new Cart()
+            {
+                Id= 1,
+                UserId = "6331660a-cf01-4033-8642-8774887bc271",
+            };
+            Cart2 = new Cart()
+            {
+                Id= 2,
+                UserId = "0dd13f6c-918d-4e39-bf80-5874a9c96b08",
             };
         }
 

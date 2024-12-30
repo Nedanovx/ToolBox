@@ -1,27 +1,42 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using ToolBox.Models;
+using ToolBox.Controllers.Base;
+using ToolBox.Core.Contracts;
 
 namespace ToolBox.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductService productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductService productService)
         {
-            _logger = logger;
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var allProduct = await productService.AllProductAsync();
+
+            return View(allProduct);
         }
 
+
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("StatusCodeError/{statusCode}")]
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+            if (statusCode == 400)
+            {
+                return View("Error400");
+            }
+
+            return View("Error");
         }
     }
 }

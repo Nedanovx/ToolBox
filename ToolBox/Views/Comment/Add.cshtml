@@ -1,0 +1,22 @@
+﻿@model CommentModel
+@{
+    ViewData["Title"] = "Add Comment";
+}
+
+
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.ProductComment" class="form-label-add-edit">Вашето мнение:</label>
+        <input type="hidden" asp-for="@Model.UserId" value="@Model.UserId" />
+        <input type="hidden" asp-for="@Model.DateTime" value="@Model.DateTime" />
+        <input type="hidden" asp-for="@Model.ProductId" value="@Model.ProductId" />
+        <textarea class="form-control" asp-for="ProductComment" rows="5"></textarea>
+        <span asp-validation-for="ProductComment" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary align-items-md-end" value="Изпрати коментар" />
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

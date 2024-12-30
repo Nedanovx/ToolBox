@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ProductQueryModel>
+@{
+
+    var products = Model.ToList();
+    int itemsPerPage = 8;
+    int totalPages = (int)Math.Ceiling((double)products.Count / itemsPerPage);
+    var currentPage = Convert.ToInt32(ViewContext.HttpContext.Request.Query["page"]);
+
+    if (currentPage == 0)
+    {
+        currentPage = 1;
+    }
+
+    int startIndex = (currentPage - 1) * itemsPerPage;
+    int endIndex = Math.Min(startIndex + itemsPerPage, products.Count);
+}
+@{
+    ViewData["Title"] = "Result";
+}
+
+<section class="row mb-2">
+    @if (products.Any())
+    {
+        <div class="row g-3">
+            @for (int i = startIndex; i < endIndex; i += 4)
+            {
+                <div class="row mb-4 g-3">
+
+                    @for (int j = i; j < i + 4 && j < endIndex; j++)
+                    {
+                        var product = products[j];
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card h-100">
+                                <img src="data:image/jpeg;base64,@product.ImageBase64" class="card-img-top img-fluid" alt="@product.ProductName" style="object-fit:cover; height: 12rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.ProductName</h5>
+                                    @if (product.IsPromo)
+                                    {
+                                        <div class="d-flex justify-content-around">
+                                            <big style="text-decoration:line-through">@product.ProductPrice лв.</big>
+                                            <big style="color:red">@product.PromoPrice лв.</big>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <big>@product.ProductPrice лв.</big>
+                                    }
+                                </div>
+                                <div class="d-flex justify-content-around flex-wrap">
+                                    <a class="btn btn-primary mb-2 mx-1" asp-controller="Details" asp-action="Details" asp-route-sku="@product.SKU">Преглед</a>
+                                    @if (product.IsInStock)
+                                    {
+                                        <a class="btn btn-primary mb-2 mx-1" asp-controller="Buy" asp-action="Buy" asp-route-id="@product.Id">Купи</a>
+                                    }
+                                    else
+                                    {
+                                        <big class="text-danger mb-2">Изчерпан</big>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center align-items-center" style="height: 50vh">
+            <span class="text-center fw-bold">
+                Няма намерени продукти
+            </span>
+        </div>
+    }
+</section>
+
+<section class="row mt-4">
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item @((totalPages == 0 || totalPages == 1) ? "disabled" : "")">
+                <a class="page-link" href="?page=1"><<</a>
+            </li>
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="?page=@(currentPage - 1)"><</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(currentPage == i ? "active" : "")">
+                    <a class="page-link" href="?page=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="?page=@(currentPage + 1)">></a>
+            </li>
+            <li class="page-item @(totalPages == 0 || totalPages == 1 ? "disabled" : "")">
+                <a class="page-link" href="?page=@totalPages">>></a>
+            </li>
+        </ul>
+    </nav>
+</section>
