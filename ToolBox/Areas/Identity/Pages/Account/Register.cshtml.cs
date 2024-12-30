@@ -92,7 +92,7 @@ namespace ToolBox.Areas.Identity.Pages.Account
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(MaxApplicationUserLastNameLength, MinimumLength = MinAppUserLastNameLength, ErrorMessage = "Полето {0} трябва да съдържа от {2} до {1} символа."]
+            [StringLength(MaxApplicationUserLastNameLength, MinimumLength = MinAppUserLastNameLength, ErrorMessage = "Полето {0} трябва да съдържа от {2} до {1} символа.")]
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
